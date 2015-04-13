@@ -5,6 +5,8 @@ aci <- read.table (file="2013_2014_photosynthesis_master.csv", sep=",", header=T
 aci2014 <- subset(aci, year == 2014)
   
 #tapply to get averages
+#test commit
+
 
 tapply(aci2014$vcmax, aci2014$genotype, mean)
 
