@@ -77,6 +77,30 @@ ggplot(summary_vcmax, aes(x=month, y=vcmax, fill=state)) +
   geom_errorbar(aes(ymin=vcmax-ci, ymax=vcmax+ci),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9))
+
+
+
+#June
+boxplot(june_vcmax ~ state, data = aci2014,
+        xlab = "Genotype", ylab = "Vcmax",
+        main = "June 2014 Vcmax")
+
+#July
+boxplot(july_vcmax ~ state, data = aci2014,
+        xlab = "Genotype", ylab = "Vcmax",
+        main = "July 2014 Vcmax")
+
+#September
+boxplot(september_vcmax ~ state, data = aci2014,
+        xlab = "Genotype", ylab = "Vcmax",
+        main = "September 2014 Vcmax")
+
+
+
+
+
+
+
 # jmax
 
 summary_jmax <- summarySE(aci2014, measurevar="jmax", groupvars=c("state","month"))
@@ -86,6 +110,28 @@ ggplot(summary_jmax, aes(x=month, y=jmax, fill=state)) +
   geom_errorbar(aes(ymin=jmax-ci, ymax=jmax+ci),
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9))
+
+
+#June
+
+boxplot(june_jmax ~ state, data = aci2014,
+        xlab = "Genotype", ylab = "Jmax",
+        main = "June 2014 Jmax")
+
+#July
+
+boxplot(july_jmax ~ state, data = aci2014,
+        xlab = "Genotype", ylab = "Jmax",
+        main = "July 2014 Jmax")
+
+#September
+
+boxplot(september_jmax ~ state, data = aci2014,
+        xlab = "Genotype", ylab = "Jmax",
+        main = "September 2014 Jmax")
+
+
+
 
 
 # Biomass
