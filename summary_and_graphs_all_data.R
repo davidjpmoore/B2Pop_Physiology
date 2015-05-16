@@ -81,19 +81,25 @@ ggplot(summary_vcmax, aes(x=month, y=vcmax, fill=state)) +
 
 
 #June
-boxplot(june_vcmax ~ state, data = aci2014,
+june_aci <- subset(aci2014, month == "june")
+
+boxplot(vcmax ~ state, data = june_aci,
         xlab = "Genotype", ylab = "Vcmax",
         main = "June 2014 Vcmax")
 
 #July
-boxplot(july_vcmax ~ state, data = aci2014,
+july_aci <- subset(aci2014, month == "july")
+
+boxplot(vcmax ~ state, data = july_aci,
         xlab = "Genotype", ylab = "Vcmax",
-        main = "July 2014 Vcmax")
+        main = "july 2014 Vcmax")
 
 #September
-boxplot(september_vcmax ~ state, data = aci2014,
+september_aci <- subset(aci2014, month == "september")
+
+boxplot(vcmax ~ state, data = september_aci,
         xlab = "Genotype", ylab = "Vcmax",
-        main = "September 2014 Vcmax")
+        main = "september 2014 Vcmax")
 
 
 
@@ -113,22 +119,25 @@ ggplot(summary_jmax, aes(x=month, y=jmax, fill=state)) +
 
 
 #June
+june_aci <- subset(aci2014, month == "june")
 
-boxplot(june_jmax ~ state, data = aci2014,
-        xlab = "Genotype", ylab = "Jmax",
-        main = "June 2014 Jmax")
+boxplot(jmax ~ state, data = june_aci,
+        xlab = "Genotype", ylab = "jmax",
+        main = "June 2014 jmax")
 
 #July
+july_aci <- subset(aci2014, month == "july")
 
-boxplot(july_jmax ~ state, data = aci2014,
-        xlab = "Genotype", ylab = "Jmax",
-        main = "July 2014 Jmax")
+boxplot(jmax ~ state, data = july_aci,
+        xlab = "Genotype", ylab = "jmax",
+        main = "july 2014 jmax")
 
 #September
+september_aci <- subset(aci2014, month == "september")
 
-boxplot(september_jmax ~ state, data = aci2014,
-        xlab = "Genotype", ylab = "Jmax",
-        main = "September 2014 Jmax")
+boxplot(jmax ~ state, data = september_aci,
+        xlab = "Genotype", ylab = "jmax",
+        main = "september 2014 jmax")
 
 
 
