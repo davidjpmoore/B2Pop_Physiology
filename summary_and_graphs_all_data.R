@@ -170,6 +170,10 @@ boxplot(start_growth ~ state, data = data,
         main = "2014 start_growth")
 
 
+plot(data$start_growth, data$biomass, xlab = "Start growth (doy)", ylab = "Biomass (g)", 
+     main = "2014 Biomass vs. Budbreak")
+
+
 # End growth
 
 summary_end_growth <- summarySE(data, measurevar="end_growth", groupvars=c("state"))
@@ -187,7 +191,6 @@ boxplot(end_growth ~ state, data = data,
         main = "2014 end_growth")
 
 
-
 # Duration growth
 summary_duration_growth <- summarySE(data, measurevar="duration_growth", groupvars=c("state"))
 
@@ -200,6 +203,9 @@ ggplot(summary_duration_growth, aes(x=state, y=duration_growth, fill=state)) +
 boxplot(duration_growth ~ state, data = data,
         xlab = "Genotype", ylab = "duration_growth", 
         main = "2014 duration_growth")
+
+plot(data$duration_growth, data$biomass, xlab = "Duration growth (days)", ylab = "Biomass (g)", 
+     main = "2014 Biomass vs. Growth duration")
 
 
 # June branches
@@ -215,6 +221,9 @@ ggplot(summary_june_branch_number, aes(x=state, y=june_branch_number, fill=state
 boxplot(june_branch_number ~ state, data = data,
         xlab = "Genotype", ylab = "june_branch_number", 
         main = "2014 june_branch_number")
+
+plot(data$june_branch_number, data$biomass, xlab = "June branch number", ylab = "Biomass (g)", 
+     main = "2014 Biomass vs. June branch number")
 
 
 # December branches
@@ -245,6 +254,10 @@ ggplot(summary_june_total_diameter, aes(x=state, y=june_total_diameter, fill=sta
 boxplot(june_total_diameter ~ state, data = data,
         xlab = "Genotype", ylab = "june_total_diameter", 
         main = "2014 june_total_diameter")
+
+plot(data$june_total_diameter, data$biomass, xlab = "June total diameter", ylab = "Biomass (g)", 
+     main = "2014 Biomass vs. June total diameter")
+
 
 
 # December total diameter
@@ -277,6 +290,9 @@ ggplot(summary_june_max_diameter, aes(x=state, y=june_max_diameter, fill=state))
 boxplot(june_max_diameter ~ state, data = data,
         xlab = "Genotype", ylab = "june_max_diameter", 
         main = "2014 june_max_diameter")
+
+plot(data$june_max_diameter, data$biomass, xlab = "June max diameter", ylab = "Biomass (g)", 
+     main = "2014 Biomass vs. June max diameter")
 
 
 # December diameter of largest branch
