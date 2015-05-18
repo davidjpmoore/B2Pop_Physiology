@@ -10,7 +10,6 @@ library(ggplot2)
 
 #tapply to get averages
 
-
 #tapply(aci2014$vcmax, aci2014$genotype, mean)
 
 #summary stats
@@ -64,7 +63,7 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
 
 
 
-# Summaries then graphs
+# Summaries, bar graphs, boxplots
 
 # Graphs use 95% confidence intervals instead of SEM. See reference above.
 
