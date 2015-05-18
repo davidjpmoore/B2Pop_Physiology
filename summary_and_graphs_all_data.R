@@ -323,6 +323,8 @@ boxplot(leaf_number ~ state, data = data,
         xlab = "Genotype", ylab = "leaf_number", 
         main = "2014 leaf_number")
 
+plot(data$leaf_number, data$biomass, xlab = "Leaf number", ylab = "Biomass (g)", 
+     main = "2014 Biomass vs. Leaf number")
 
 
 
