@@ -293,6 +293,19 @@ boxplot(december_max_diameter ~ state, data = data,
         xlab = "Genotype", ylab = "december_max_diameter", 
         main = "2014 december_max_diameter")
 
+# Leaf number
+
+summary_leaf_number <- summarySE(data, measurevar="leaf_number", groupvars=c("state"))
+
+ggplot(summary_leaf_number, aes(x=state, y=leaf_number, fill=state)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=leaf_number-ci, ymax=leaf_number+ci),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9))
+
+boxplot(leaf_number ~ state, data = data,
+        xlab = "Genotype", ylab = "leaf_number", 
+        main = "2014 leaf_number")
 
 
 
