@@ -86,12 +86,18 @@ boxplot(vcmax ~ state, data = june_aci,
         xlab = "Genotype", ylab = "Vcmax",
         main = "June 2014 Vcmax")
 
+qplot(vcmax, biomass, colour = state, data = june_aci)
+
+
 #July
 july_aci <- subset(aci2014, month == "july")
 
 boxplot(vcmax ~ state, data = july_aci,
         xlab = "Genotype", ylab = "Vcmax",
         main = "july 2014 Vcmax")
+
+qplot(vcmax, biomass, colour = state, data = july_aci)
+
 
 #September
 september_aci <- subset(aci2014, month == "september")
@@ -100,6 +106,7 @@ boxplot(vcmax ~ state, data = september_aci,
         xlab = "Genotype", ylab = "Vcmax",
         main = "september 2014 Vcmax")
 
+qplot(vcmax, biomass, colour = state, data = september_aci)
 
 
 
@@ -116,6 +123,9 @@ ggplot(summary_jmax, aes(x=month, y=jmax, fill=state)) +
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9))
 
+qplot(jmax, biomass, colour = state, data = june_aci)
+
+
 
 #June
 june_aci <- subset(aci2014, month == "june")
@@ -131,6 +141,9 @@ boxplot(jmax ~ state, data = july_aci,
         xlab = "Genotype", ylab = "jmax",
         main = "july 2014 jmax")
 
+qplot(jmax, biomass, colour = state, data = july_aci)
+
+
 #September
 september_aci <- subset(aci2014, month == "september")
 
@@ -138,6 +151,7 @@ boxplot(jmax ~ state, data = september_aci,
         xlab = "Genotype", ylab = "jmax",
         main = "september 2014 jmax")
 
+qplot(jmax, biomass, colour = state, data = september_aci)
 
 
 
@@ -173,6 +187,7 @@ boxplot(start_growth ~ state, data = data,
 plot(data$start_growth, data$biomass, xlab = "Start growth (doy)", ylab = "Biomass (g)", 
      main = "2014 Biomass vs. Budbreak")
 
+qplot(start_growth, biomass, colour = state, data = data)
 
 # End growth
 
@@ -191,6 +206,8 @@ boxplot(end_growth ~ state, data = data,
         main = "2014 end_growth")
 
 
+
+
 # Duration growth
 summary_duration_growth <- summarySE(data, measurevar="duration_growth", groupvars=c("state"))
 
@@ -206,6 +223,8 @@ boxplot(duration_growth ~ state, data = data,
 
 plot(data$duration_growth, data$biomass, xlab = "Duration growth (days)", ylab = "Biomass (g)", 
      main = "2014 Biomass vs. Growth duration")
+
+qplot(duration_growth, biomass, colour = state, data = data)
 
 
 # June branches
@@ -224,6 +243,8 @@ boxplot(june_branch_number ~ state, data = data,
 
 plot(data$june_branch_number, data$biomass, xlab = "June branch number", ylab = "Biomass (g)", 
      main = "2014 Biomass vs. June branch number")
+
+qplot(june_branch_number, biomass, colour = state, data = data)
 
 
 # December branches
@@ -258,6 +279,7 @@ boxplot(june_total_diameter ~ state, data = data,
 plot(data$june_total_diameter, data$biomass, xlab = "June total diameter", ylab = "Biomass (g)", 
      main = "2014 Biomass vs. June total diameter")
 
+qplot(june_total_diameter, biomass, colour = state, data = data)
 
 
 # December total diameter
@@ -294,6 +316,8 @@ boxplot(june_max_diameter ~ state, data = data,
 plot(data$june_max_diameter, data$biomass, xlab = "June max diameter", ylab = "Biomass (g)", 
      main = "2014 Biomass vs. June max diameter")
 
+qplot(june_max_diameter, biomass, colour = state, data = data)
+
 
 # December diameter of largest branch
 
@@ -326,6 +350,7 @@ boxplot(leaf_number ~ state, data = data,
 plot(data$leaf_number, data$biomass, xlab = "Leaf number", ylab = "Biomass (g)", 
      main = "2014 Biomass vs. Leaf number")
 
+qplot(leaf_number, biomass, colour = state, data = data)
 
 
 
