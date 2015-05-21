@@ -2,8 +2,15 @@ setwd("C:/Users/ianshiach/Desktop/Grad School/Thesis/Data/Master Files")
 aci <- read.table (file="2013_2014_photosynthesis_master.csv", sep=",", header=TRUE)
 data <- read.table (file="2014_all_but_photosynthesis_master.csv", sep=",", header=TRUE)
 
-#subset 2014
-aci2014 <- subset(aci, year == 2014)
+
+#subset Ian's trees
+aci_focus <- aci[aci$state %in% c("WA/OK","WA/TX","WA/IL","WA/MO","WA/MN"), ]
+
+#subset 2013/2014
+aci2013 <- subset(aci_focus, year == 2013)
+aci2014 <- subset(aci_focus, year == 2014)
+
+
 
 #libraries
 library(ggplot2)
@@ -69,6 +76,16 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
 
 # Vcmax
 
+#2013
+summary_vcmax <- summarySE(aci2013, measurevar="vcmax", groupvars=c("state","month"))
+
+ggplot(summary_vcmax, aes(x=month, y=vcmax, fill=state)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=vcmax-ci, ymax=vcmax+ci),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9))
+
+#2014
 summary_vcmax <- summarySE(aci2014, measurevar="vcmax", groupvars=c("state","month"))
 
 ggplot(summary_vcmax, aes(x=month, y=vcmax, fill=state)) + 
