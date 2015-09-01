@@ -1,4 +1,4 @@
-setwd("C:/Users/ianshiach/Desktop/Grad School/Thesis/Data/Isoprene/")
+setwd("C:/Users/ianshiach/Desktop/Grad School/Thesis/Processing/B2Pop_Physiology/data/")
 
 # read in calibration data
 iso_cal <- read.table(file="06262015_isoprene_calibration.csv", sep=",", header=TRUE)
