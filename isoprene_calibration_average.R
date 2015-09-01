@@ -1,4 +1,6 @@
-setwd("C:/Users/ianshiach/Desktop/Grad School/Thesis/Processing/B2Pop_Physiology/data/")
+setwd("./data/")
+#if we put all the R code in the folder "Rcode" then this line becomes:
+# setwd("../data/")
 
 # read in calibration data
 iso_cal <- read.table(file="06262015_isoprene_calibration.csv", sep=",", header=TRUE)
