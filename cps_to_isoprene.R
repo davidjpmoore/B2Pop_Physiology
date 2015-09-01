@@ -35,5 +35,45 @@ m4 <- coef(lm(y4 ~ x4))[[2]]
 
 # inputting average measurement CPS data into standard curve equations
 
+# need to subset average CPS values by calibration number
+
+cps_cal_1 <- data.frame(cps_measurements[which(cps_measurements[,2]==1), c("tree","cps", "genotype", "state")])
+
+cps_cal_2 <- data.frame(cps_measurements[which(cps_measurements[,2]==2), c("tree","cps", "genotype", "state")])
+
+cps_cal_3 <- data.frame(cps_measurements[which(cps_measurements[,2]==3), c("tree","cps", "genotype", "state")])
+
+cps_cal_4 <- data.frame(cps_measurements[which(cps_measurements[,2]==4), c("tree","cps", "genotype", "state")])
+
+# input measurements into equations
+
+isoprene1 <- m1 * cps_cal_1$cps + b1
+
+isoprene2 <- m2 * cps_cal_2$cps + b2
+
+isoprene3 <- m3 * cps_cal_3$cps + b3
+
+isoprene4 <- m4 * cps_cal_4$cps + b4
+
+# add calculated values of isoprene (ppbv) to data frames
+
+cps_cal_1$isoprene_ppbv <- isoprene1
+
+cps_cal_2$isoprene_ppbv <- isoprene2
+
+cps_cal_3$isoprene_ppbv <- isoprene3
+
+cps_cal_4$isoprene_ppbv <- isoprene4
+
+# combine data frames into one
+
+isoprene_ppbv <- rbind(cps_cal_1,cps_cal_2,cps_cal_3,cps_cal_4)
+
+
+
+
+
+
+
 
 
