@@ -1,0 +1,77 @@
+FILENAME: 
+
+For each filename, a short description of what data it contains |Format of the file if not obvious from the file name | If the data set includes multiple files that relate to one another, the relationship between the files or a description of the file structure that holds them (possible terminology might include "dataset" or "study" or "data package")
+********
+HEADER:
+#### NOTE Time zone is Arizona (Mountain Standard). However, at the time of most recent download (3/9/2015), the time was one hour fast (the 11:45AM point was really 10:45AM). Time was reset to Arizona (Mountain Standard) on 3/9/2015.
+
+TIMESTAMP	RECORD	AirTC_Avg	RH	WS_ms_Avg	WindDir	Rain_mm_Tot	PAR_Den_Avg	PAR_Tot_Tot	PAR_Den
+
+TS	RN	Deg C	%	meters/second	degrees	mm	umol/s/m^2	mmol/m^2	umol/s/m^2
+
+		Avg	Smp	Avg	Smp	Tot	Avg	Tot	Smp
+
+
+********
+Name/institution/address/email information for Principal investigator (or person responsible for collecting the data) | Associate or co-investigators | Contact person for questions
+********
+PI: Davidjpmoore@email.arizona.edu
+Co-I:
+Collected by:Ian Shiach Shiach@email.arizona.edu
+Lab analysis:
+Contact for data:
+********
+Date of data collection (can be a single date, or a range) 
+9/13/2013 10:35 to 3/9/2015 11:45
+
+
+Information about geographic location of data collection
+******
+Biosphere2 Poplar Plantation
+
+
+******
+Date that the file was created
+*03/09/2015
+Date(s) that the file(s) was updated and the nature of the update(s), if applicable
+*
+
+Keywords used to describe the data topic
+********
+Meteorological data, met data, environmental measurements 
+
+
+********
+Language information
+*N/A English
+
+Methodological information
+Method description, links or references to publications or other documentation containing experimental design or protocols used in data collection | Any instrument-specific information needed to understand or interpret the data | Standards and calibration information, if appropriate | Describe any quality-assurance procedures performed on the data | Definitions of codes or symbols used to note or characterize low quality/questionable/outliers that people should be aware of | People involved with sample collection, processing, analysis and/or submission | 
+*********
+Campbell Scientific Met Tower & Data Logger
+# Add details of sensors here
+
+*********
+Data-specific information
+Full names and definitions (spell out abbreviated words) of column headings  for tabular data | ******* Units of measurement ******** | Definitions for codes or symbols used to record missing data | Specialized formats or abbreviations used 
+******** 
+******* PLEASE EXPLAIN HEADER CODES *********
+
+TIMESTAMP	
+RECORD	
+AirTC_Avg Air Temperature for time interval	
+RH	Relative Humidity
+WS_ms_Avg	Wind Speed
+WindDir	 Wind Direction
+Rain_mm_Tot	Rainfall Total
+#what do the different PAR values represent?
+PAR_Den_Avg	PAR
+PAR_Tot_Tot	PAR
+PAR_Den		PAR
+
+********
+
+Sharing/Access information
+Licenses or restrictions placed on the data | Links to publications that cite or use the data | Links to other publicly accessible locations of the data | Recommended citation for the data |Information about funding sources that supported the collection of the data
+
+
