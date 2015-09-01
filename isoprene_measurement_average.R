@@ -1,4 +1,4 @@
-setwd("C:/Users/ianshiach/Desktop/Grad School/Thesis/Processing/B2Pop_Physiology/data/")
+setwd("./data/")
 
 # read in measurement data
 iso_meas <- read.table(file="06262015_isoprene_measurements.csv", sep=",", header=TRUE)
