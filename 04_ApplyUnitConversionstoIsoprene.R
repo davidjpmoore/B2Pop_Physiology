@@ -27,9 +27,14 @@ b <- 1/68.12
 # moles of isoprene to milimoles of isoprene
 # 1000 mmol_iso/1 mol_iso
 
-c <- 1000/1
+#c <- 1000/1
 
-# looks like it should be nanomoles of isoprene
+# looks like it should be nanomoles of isoprene per Eller et al. 2012
+
+# moles of isoprene to nanomoles of isoprene
+# 1000000000 nmol_iso/1 mol_iso
+
+c <- 1000000000/1
 
 ###############################
 # kilograms of air to seconds (kg_air -> s)
