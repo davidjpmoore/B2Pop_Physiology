@@ -1,4 +1,6 @@
-setwd("C:/Users/ianshiach/Desktop/Grad School/Thesis/Data/Master Files")
+setwd("./data/")
+
+
 aci <- read.table (file="2013_2014_photosynthesis_master.csv", sep=",", header=TRUE)
 data <- read.table (file="2014_all_but_photosynthesis_master.csv", sep=",", header=TRUE)
 
