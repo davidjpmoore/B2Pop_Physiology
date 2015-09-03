@@ -103,7 +103,7 @@ boxplot(vcmax ~ state, data = june_aci,
         xlab = "Genotype", ylab = "Vcmax",
         main = "June 2014 Vcmax")
 
-qplot(vcmax, biomass, colour = state, data = june_aci)
+qplot(vcmax, data$biomass, colour = state, data = june_aci)
 
 
 #July
@@ -113,7 +113,7 @@ boxplot(vcmax ~ state, data = july_aci,
         xlab = "Genotype", ylab = "Vcmax",
         main = "july 2014 Vcmax")
 
-qplot(vcmax, biomass, colour = state, data = july_aci)
+qplot(vcmax, data$biomass, colour = state, data = july_aci)
 
 
 #September
@@ -123,7 +123,7 @@ boxplot(vcmax ~ state, data = september_aci,
         xlab = "Genotype", ylab = "Vcmax",
         main = "september 2014 Vcmax")
 
-qplot(vcmax, biomass, colour = state, data = september_aci)
+qplot(vcmax, data$biomass, colour = state, data = september_aci)
 
 
 
@@ -140,7 +140,7 @@ ggplot(summary_jmax, aes(x=month, y=jmax, fill=state)) +
                 width=.2,                    # Width of the error bars
                 position=position_dodge(.9))
 
-qplot(jmax, biomass, colour = state, data = june_aci)
+qplot(jmax, data$biomass, colour = state, data = june_aci)
 
 
 
@@ -158,7 +158,7 @@ boxplot(jmax ~ state, data = july_aci,
         xlab = "Genotype", ylab = "jmax",
         main = "july 2014 jmax")
 
-qplot(jmax, biomass, colour = state, data = july_aci)
+qplot(jmax, data$biomass, colour = state, data = july_aci)
 
 
 #September
@@ -168,7 +168,7 @@ boxplot(jmax ~ state, data = september_aci,
         xlab = "Genotype", ylab = "jmax",
         main = "september 2014 jmax")
 
-qplot(jmax, biomass, colour = state, data = september_aci)
+qplot(jmax, data$biomass, colour = state, data = september_aci)
 
 
 
