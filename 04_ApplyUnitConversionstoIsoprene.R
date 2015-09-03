@@ -2,6 +2,9 @@
 ### Date: 09/01/2015
 ### Purpose: To calculate a flux of isoprene in mmol isoprene/m2/sec from ppbv isoprene
 
+
+setwd("./data/")
+
 #read isoprene in ppbv
 #load df isoprene_ppbv 
 
@@ -24,12 +27,12 @@ a <- 1/1000000
 
 b <- 1/68.12
 
-# moles of isoprene to milimoles of isoprene
-# 1000 mmol_iso/1 mol_iso
+#### moles of isoprene to milimoles of isoprene
+#### 1000 mmol_iso/1 mol_iso
 
-#c <- 1000/1
+####c <- 1000/1
 
-# looks like it should be nanomoles of isoprene per Eller et al. 2012
+# looks like it should be nanomoles of isoprene, per Eller et al. 2012
 
 # moles of isoprene to nanomoles of isoprene
 # 1000000000 nmol_iso/1 mol_iso
@@ -80,10 +83,13 @@ i <- 1/6
 j <- 10000/1
 
 ###############################
-#apply unit converions
+# create new data frame
 
+isoprene_final <- data.frame(isoprene_ppbv)
 
-isoprene_ppbv$isoprene_mmol_per_m2_s <- isoprene_ppbv$isoprene_ppbv * a * b * c * d * e * f * g * h * i * j
+# apply unit converions
+
+isoprene_final$isoprene_nmol_per_m2_s <- isoprene_ppbv$isoprene_ppbv * a * b * c * d * e * f * g * h * i * j
 
   
 
