@@ -91,7 +91,8 @@ isoprene_final <- data.frame(isoprene_ppbv)
 
 isoprene_final$isoprene_nmol_per_m2_s <- isoprene_ppbv$isoprene_ppbv * a * b * c * d * e * f * g * h * i * j
 
+# save df isoprene_final as .Rda
+
+save(isoprene_final, file="isoprene_final.Rda")
   
-boxplot(isoprene_nmol_per_m2_s ~ state, data = isoprene_final,
-        xlab = "Genotype", ylab = "Isoprene nmol/(s*m^2)", 
-        main = "2015 isoprene flux")
+
