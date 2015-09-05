@@ -110,3 +110,8 @@ plot (B2Physiologymaster$isoprene_nmol_per_m2_s_HumAir,B2Physiologymaster$mmol.i
 plot (B2Physiologymaster$isoprene_nmol_per_m2_s_IMS,B2Physiologymaster$mmol.isoprene.m2.sec)
 plot (B2Physiologymaster$isoprene_nmol_per_m2_s_DryAir,B2Physiologymaster$mmol.isoprene.m2.sec)
 
+
+
+plot (B2Physiologymaster$CO2, B2Physiologymaster$isoprene_nmol_per_m2_s_HumAir)
+plot (B2Physiologymaster$CO2, B2Physiologymaster$mmol.isoprene.m2.sec)
+
