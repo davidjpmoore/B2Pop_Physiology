@@ -4,6 +4,9 @@
 #Load data
 #Amberly's data from B2
 
+library(ggplot2)
+library(dplyr)
+
 B2Physiologymaster = read.table("./data/Neice_IsopreneAci2014.csv", na.strings=c('.'), stringsAsFactors=FALSE, head=TRUE, sep=",")
 
 ASL = 1164.34 #elevation of B2
@@ -52,7 +55,7 @@ M_wv = 0.018016 #Molar mass of water vapor,  kg/mol
 R_ugc = 8.314 #Universal gas constant,  J/(K·mol)
 #P_wv = # partial pressure of water vapour
   
-  P_wv25 = 3169.0 # @25 C Water Vapor Pressure P(Pa)
+P_wv25 = 3169.0 # @25 C Water Vapor Pressure P(Pa)
 P_wv35  = 5626.7 # @ 35 C Water Vapor Pressure P(Pa)
 
 #hack for two different Water Vapor Pressure values for 25 and 35 degrees 
@@ -114,4 +117,33 @@ plot (B2Physiologymaster$isoprene_nmol_per_m2_s_DryAir,B2Physiologymaster$mmol.i
 
 plot (B2Physiologymaster$CO2, B2Physiologymaster$isoprene_nmol_per_m2_s_HumAir)
 plot (B2Physiologymaster$CO2, B2Physiologymaster$mmol.isoprene.m2.sec)
+
+
+
+Iso <- ggplot(B2Physiologymaster, aes(x=mmol.isoprene.m2.sec, y=isoprene_nmol_per_m2_s_DryAir))
+Iso + aes(shape = factor(Tref)) +
+  geom_point(aes(colour = factor(Tref)), size = 8) +
+  geom_point(colour="grey90", size = 2.5) +
+  theme_classic() +
+  theme(axis.text=element_text(size=20),
+        axis.title=element_text(size=22,face="bold")) + 
+  theme(panel.border = element_blank(), axis.line = element_line(colour="black", size=2, lineend="square"))+
+  theme(axis.ticks = element_line(colour="black", size=2, lineend="square"))+
+  ylab("Ian's calculation (dry air)")+
+  xlab("Amberly's calculation") +
+  geom_smooth(method=lm,se=FALSE)
+
+
+IsoHum <- ggplot(B2Physiologymaster, aes(x=mmol.isoprene.m2.sec, y=isoprene_nmol_per_m2_s_HumAir))
+IsoHum + aes(shape = factor(Tref)) +
+  geom_point(aes(colour = factor(Tref)), size = 8) +
+  geom_point(colour="grey90", size = 2.5) +
+  theme_classic() +
+  theme(axis.text=element_text(size=20),
+        axis.title=element_text(size=22,face="bold")) + 
+  theme(panel.border = element_blank(), axis.line = element_line(colour="black", size=2, lineend="square"))+
+  theme(axis.ticks = element_line(colour="black", size=2, lineend="square"))+
+  ylab("Ian's calculation (dry air)")+
+  xlab("Amberly's calculation") +
+  geom_smooth(method=lm,se=FALSE)
 
