@@ -1,4 +1,4 @@
-0##Author: Ian Shiach
+##Author: Ian Shiach
 ##Date: 09/16/2015
 ##Purpose: test PEcAn.photosynthesis and read in LICOR files
 
@@ -17,13 +17,12 @@ library(PEcAn.photosynthesis)
 
 
 
-pita_06082014 <- read.Licor("2014_aci/06-08-14-ims-pita-25tree-aci")
-princess_06082014 <- read.Licor("2014_aci/06-08-14-ims-princess-25tree-aci")
-leila_07092014 <- read.Licor("2014_aci/07-09-2014-leila-aci-punch-ims")
-pita_07092014 <- read.Licor("2014_aci/07-09-2014-pita-aci-punch-ims")
-flux_09092014 <- read.Licor("2014_aci/09-09-2014-ims-aci-flux")
-leila_09092014 <- read.Licor("2014_aci/09-09-2014-ims-aci-leila")
-pita_09092014 <- read.Licor("2014_aci/09-09-2014-ims-aci-pita")
+# These will come from file 09
+
+
+
+
+
 
 
 
@@ -41,8 +40,7 @@ pita_09092014 <- read.Licor("2014_aci/09-09-2014-ims-aci-pita")
 #this runs licor QC on a file - you click on outliers to remove them
 #master[[1]] <- Licor.QC(master[[1]])
 
-pita_06082014 <- Licor.QC(pita_06082014)
-
+#pita_06082014 <- Licor.QC(pita_06082014)
 
 
 
