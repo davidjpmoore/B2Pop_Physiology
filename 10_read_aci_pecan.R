@@ -4,31 +4,40 @@
 
 setwd("./data/")
 
-#installing PEcAn.photosynthesis as a stand alone
-
-#note you need rjags installed in R and also JAGS (stand alone application) installed on your computer
-#note you will also need Rtools installed.
-
-#note you will get an error 
 
 library(PEcAn.photosynthesis)
-
-## Read LI-COR 6400 files (ASCII not xls)
-
-
-
-# These will come from file 09
+library(ggplot2)
 
 
 
+## Read LI-COR 6400 files (ASCII not xls) (file from 09)
 
 
-
-
-
+load("aci_2014.Rda")
 
 ## Load files to a list
-#master = lapply(filenames, read.Licor)
+
+aci_2014_list <- split(aci_2014, factor(sort(rank(row.names(aci_2014))%%75)))
+
+
+# Plot facet wrap
+
+test <- ggplot(data=aci_2014, aes(x=Ci, y=Photo))
+test + facet_wrap(~ fname) + 
+  geom_point(colour="black", size = 2.5) +
+  theme_classic() +
+  theme(axis.text=element_text(size=20),
+        axis.title=element_text(size=22,face="bold")) + 
+  theme(panel.border = element_blank(), axis.line = element_line(colour="black", size=2, lineend="square"))+
+  theme(axis.ticks = element_line(colour="black", size=2, lineend="square"))+
+  ylab("Assimilation (umol/m2/sec)")+
+  xlab("Ci")
+
+
+
+
+
+
 
 
 # # The code below performs a set of interactive QA/QC checks on the LI-COR data that's been loaded. 
@@ -37,33 +46,29 @@ library(PEcAn.photosynthesis)
 # # If you want to get a feel for how the code works you'll 
 # want to run it first on just one file, rather than looping over all the files
 
-#this runs licor QC on a file - you click on outliers to remove them
-#master[[1]] <- Licor.QC(master[[1]])
+# this runs licor QC on a file - you click on outliers to remove them
 
-#pita_06082014 <- Licor.QC(pita_06082014)
-
+# aci_2014_list[[1]] <- Licor.QC(aci_2014_list[[1]])
 
 
 
 
+# same process for all files
+# note: it doesn't appear possible to stop this process partway through. Beware running it with this large list of dataframes unless you're prepared to do it in one sitting.
 
-
-
-
-#same process for all files
-for(i in 1:length(master)){
-  master[[i]] = Licor.QC(master[[i]])
+for(i in 1:length(aci_2014_list)){
+  aci_2014_list[[i]] = Licor.QC(aci_2014_list[[i]])
 }
 
 #after the QC process combine the files into one data frame
 
-dat<-do.call("rbind", master)
+aci_2014_qc <- do.call("rbind", aci_2014_list)
 
 
 ## if QC was done, remove both unchecked points and those that fail QC
-if("QC" %in% colnames(dat)){
-  dat = dat[-which(dat$QC < 1),]  
+if("QC" %in% colnames(aci_2014_qc)){
+  aci_2014_qc = aci_2014_qc[-which(aci_2014_qc$QC < 1),]  
 } else{
-  QC = rep(1,nrow(dat))
-  dat = cbind(dat,QC)
+  QC = rep(1,nrow(aci_2014_qc))
+  aci_2014_qc = cbind(aci_2014_qc,QC)
 }
