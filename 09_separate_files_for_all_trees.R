@@ -4,7 +4,6 @@
 
 setwd("./data/")
 
-
 library(PEcAn.photosynthesis)
 
 ## Read LI-COR 6400 files (ASCII not xls)
@@ -16,7 +15,6 @@ pita_07092014 <- read.Licor("2014_aci/07-09-2014-pita-aci-punch-ims")
 flux_09092014 <- read.Licor("2014_aci/09-09-2014-ims-aci-flux")
 leila_09092014 <- read.Licor("2014_aci/09-09-2014-ims-aci-leila")
 pita_09092014 <- read.Licor("2014_aci/09-09-2014-ims-aci-pita")
-
 
 # Create new data frame for each tree/date
 # June Pita
@@ -179,7 +177,6 @@ july_d17$fname <- "07/09/2014-pita-d17-WA/IL"
 july_d06$fname <- "07/09/2014-pita-d06-WA/OK"
 july_g06$fname <- "07/09/2014-pita-g06-WA/TX"
 
-
 # September Flux
 
 september_a03$fname <- "09/09/2014-flux-a03-WA/IL"
@@ -214,7 +211,7 @@ september_c17$fname <- "09/09/2014-pita-c17-WA/OK"
 september_f16$fname <- "09/09/2014-pita-f16-wA/MO"
 september_d17$fname <- "09/09/2014-pita-d17-WA/IL"
 
-# Reset "Obs" 
+# Reset "Obs" (might not be necessary because Licor.QC doesn't differentiate between curves this way--looks like it likes separate files)
 
 june_a10$Obs <- c(1:13)
 june_a19$Obs <- c(1:13)
