@@ -22,8 +22,8 @@ aci_2014_list <- split(aci_2014, factor(sort(rank(row.names(aci_2014))%%75)))
 
 # Plot facet wrap
 
-test <- ggplot(data=aci_2014, aes(x=Ci, y=Photo))
-test + facet_wrap(~ fname) + 
+aci_plot <- ggplot(data=aci_2014, aes(x=Ci, y=Photo))
+aci_plot + facet_wrap(~ fname) + 
   geom_point(colour="black", size = 2.5) +
   theme_classic() +
   theme(axis.text=element_text(size=20),
@@ -56,8 +56,10 @@ test + facet_wrap(~ fname) +
 # same process for all files
 # note: it doesn't appear possible to stop this process partway through. Beware running it with this large list of dataframes unless you're prepared to do it in one sitting.
 
+# trying to add curve = ACi to only run through ACi rather than ACi and AQ
+
 for(i in 1:length(aci_2014_list)){
-  aci_2014_list[[i]] = Licor.QC(aci_2014_list[[i]])
+  aci_2014_list[[i]] = Licor.QC(aci_2014_list[[i]], curve = "ACi")
 }
 
 #after the QC process combine the files into one data frame
@@ -72,3 +74,19 @@ if("QC" %in% colnames(aci_2014_qc)){
   QC = rep(1,nrow(aci_2014_qc))
   aci_2014_qc = cbind(aci_2014_qc,QC)
 }
+
+
+# fit aci curve
+
+#test2 <- fitA(aci_2014_list[[1]])
+#plot.photo(aci_2014_list[[1]],test2,curve="ACi")
+
+if(file.exists("fit.RData")){
+  load("fit.RData")
+} else{
+  fit <- fitA(aci_2014)
+  save(fit,file="fit.RData")
+}
+
+plot.photo(aci_2014,fit,curve="aci")
+
