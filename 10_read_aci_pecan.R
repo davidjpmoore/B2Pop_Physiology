@@ -62,6 +62,14 @@ for(i in 1:length(aci_2014_list)){
   aci_2014_list[[i]] = Licor.QC(aci_2014_list[[i]], curve = "ACi")
 }
 
+# save qc list to .rda
+
+save(aci_2014_list, file="aci_2014_list_qc.Rda")
+
+
+
+
+
 #after the QC process combine the files into one data frame
 
 aci_2014_qc <- do.call("rbind", aci_2014_list)
@@ -75,6 +83,13 @@ if("QC" %in% colnames(aci_2014_qc)){
   aci_2014_qc = cbind(aci_2014_qc,QC)
 }
 
+# save df to .rda
+
+save(aci_2014_qc, file="aci_2014_qc.Rda")
+
+
+
+
 
 # fit aci curve
 
@@ -84,9 +99,9 @@ if("QC" %in% colnames(aci_2014_qc)){
 if(file.exists("fit.RData")){
   load("fit.RData")
 } else{
-  fit <- fitA(aci_2014)
+  fit <- fitA(aci_2014_qc)
   save(fit,file="fit.RData")
 }
 
-plot.photo(aci_2014,fit,curve="aci")
+plot.photo(aci_2014_qc,fit,curve="aci")
 
