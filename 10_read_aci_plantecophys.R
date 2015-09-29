@@ -27,10 +27,12 @@ library(dplyr)
 library(ggplot2)
 library(grid) #required for 'unit'
 #Load data
-load ("aci_2014.Rda")
+setwd("./data/")
+
+load ("aci_2014_qc.Rda")
 
 
 
-CheckACI= fitacis(aci_2014, "fname")
+CheckACI= fitacis(aci_2014_qc, "fname")
 
 plot(CheckACI, how="manyplots")
