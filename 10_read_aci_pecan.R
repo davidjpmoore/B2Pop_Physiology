@@ -66,7 +66,7 @@ for(i in 1:length(aci_2014_list)){
 
 save(aci_2014_list, file="aci_2014_list_qc.Rda")
 
-
+load("aci_2014_list_qc.Rda")
 
 
 
@@ -88,13 +88,15 @@ if("QC" %in% colnames(aci_2014_qc)){
 save(aci_2014_qc, file="aci_2014_qc.Rda")
 
 
+# load file that was created above if QC was already done previously
 
+load ("aci_2014_qc.Rda")
 
 
 # fit aci curve
-
-#test2 <- fitA(aci_2014_list[[1]])
-#plot.photo(aci_2014_list[[1]],test2,curve="ACi")
+# 
+# fit <- fitA(aci_2014_list[[1]])
+# plot.photo(aci_2014_list[[1]],fit,curve="ACi")
 
 if(file.exists("fit.RData")){
   load("fit.RData")
@@ -103,5 +105,46 @@ if(file.exists("fit.RData")){
   save(fit,file="fit.RData")
 }
 
-plot.photo(aci_2014_qc,fit,curve="aci")
+
+
+
+
+# analysis from https://github.com/PecanProject/pecan/blob/master/documentation/tutorials/MCMC/MCMC_Concepts.Rmd
+
+# params <- as.matrix(fit$params)
+# xrng = range(fit$params[,"alpha0"])
+# yrng = range(fit$params[,"Jmax0"])
+# 
+# n = 1:nrow(params)
+# plot(params[n,"alpha0"],params[n,"Jmax0"],type='p',pch="+",cex=0.5,xlim=xrng,ylim=yrng)
+# pairs(params,pch=".")
+# 
+# plot(fit$params,auto.layout = FALSE)    ## MCMC diagnostic plots
+# summary(fit$params) ## parameter estimates  
+# 
+# gelman.plot(fit$params,auto.layout = FALSE)
+# gelman.diag(fit$params)
+# 
+# par(mfrow=c(1,1))
+# mstats = summary(fit$predict)
+# pmean = mstats$statistics[grep("pmean",rownames(mstats$statistics)),1]
+# plot(pmean,aci_2014_qc$Photo,pch="+",xlab="Predicted A",ylab = "Observed A")
+# abline(0,1,col=2,lwd=2)
+# bias.fit = lm(aci_2014_qc$Photo~pmean)
+# abline(bias.fit,col=3,lty=2,lwd=2)
+# legend("topleft",legend=c("1:1","regression"),lwd=2,col=2:3,lty=1:2)
+# summary(bias.fit)
+# RMSE = sqrt(mean((pmean-aci_2014_qc$Photo)^2))
+# RMSE
+# R2 = 1-RMSE^2/var(aci_2014_qc$Photo)
+# R2
+# confint(bias.fit)
+
+# view model
+
+writeLines(fit$model)
+
+
+# plot aci curves
+# plot.photo(aci_2014_qc,fit,curve="aci")
 
