@@ -23,16 +23,38 @@
 
 library(devtools)
 library (plantecophys)
-library(dplyr)
 library(ggplot2)
 library(grid) #required for 'unit'
+library(splitstackshape)
+library(plyr)
 #Load data
 setwd("./data/")
 
 load ("aci_2014_qc.Rda")
 
 
+# fit Aci curves
 
 CheckACI= fitacis(aci_2014_qc, "fname")
 
+
+# plot Aci curves
+
 plot(CheckACI, how="manyplots")
+
+# generate df with vcmax and jmax for each tree/month
+
+aci_2014_qc_coef <- coef(CheckACI)
+
+# split fname into separate columns
+
+aci_2014_qc_coef <- cSplit(aci_2014_qc_coef, "fname", "-")
+
+# rename columns
+
+aci_2014_qc_coef <- rename(aci_2014_qc_coef, c("fname_1" = "date", "fname_2" = "licor", "fname_3" = "tree", "fname_4" = "genotype"))
+
+# save df as .Rda
+
+save(aci_2014_qc_coef, file="aci_2014_qc_coef.Rda")
+
