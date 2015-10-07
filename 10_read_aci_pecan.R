@@ -148,3 +148,30 @@ writeLines(fit$model)
 # plot aci curves
 # plot.photo(aci_2014_qc,fit,curve="aci")
 
+#diagnostic plots from Vinette
+#https://github.com/PecanProject/pecan/blob/master/modules/photosynthesis/vignettes/ResponseCurves.Rmd 
+
+#The 'params' mcmc.list contains the parameter estimate MCMC chains, which we can do standard MCMC diagnositics on.
+
+par(mfrow=c(2,1))
+plot(fit$params,auto.layout = FALSE)    ## MCMC diagnostic plots
+
+
+### YOu can extract the parameter estimates for a given fit using the function summary(fit$params)
+### It looks like the Vignette explains how to do this and how to run ANOVA's or estimate treatment effects
+### You could also just carry out fits independently on different genotypes or times etc
+### Take a read through the vignette to see if there's a more economical way to do this
+
+#https://github.com/PecanProject/pecan/blob/master/modules/photosynthesis/vignettes/ResponseCurves.Rmd  
+ParamEstimates= summary(fit$params) ## parameter estimates  
+
+gelman.plot(fit$params,auto.layout = FALSE)
+gelman.diag(fit$params)
+
+
+#The 'predict' object can be used to perform standard predictive diagnostics and to construct CI around curves
+par(mfrow=c(1,1))
+mstats = summary(fit$predict)
+pmean = mstats$statistics[grep("pmean",rownames(mstats$statistics)),1]
+plot(pmean,dat$Photo,pch="+",xlab="Predicted A",ylab = "Observed A")
+abline(0,1,col=2,lwd=2)
