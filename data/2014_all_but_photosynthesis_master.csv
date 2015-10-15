@@ -1,4 +1,4 @@
-tree,genotype,state,year,biomass,start_growth,end_growth,duration_growth,june_branch_number,december_branch_number,june_total_diameter,december_total_diameter,june_max_diameter,december_max_diameter,leaf_number,leaf_area
+tree,genotype,state,year,2014_biomass,start_growth,end_growth,duration_growth,june_branch_number,december_branch_number,june_total_diameter,december_total_diameter,june_max_diameter,december_max_diameter,leaf_number,leaf_area
 A03,50-194,WA/IL,2014,318,66,181,115,39,31,236.06,217.94,23.78,23.47,339.6044026,
 A10,199-586,WA/OK,2014,510,53,181,128,31,26,245.19,208.93,29.92,22.13,342.1174245,
 A13,50-194,WA/IL,2014,474,48,181,133,24,22,269.79,259.56,31.01,26.58,388.1295933,
