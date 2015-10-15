@@ -6,7 +6,7 @@
 
 
 library(plyr)
-
+library(car)
 
 
 setwd("./data/")
@@ -47,16 +47,40 @@ with(all_but_photosynthesis, tapply(X2013_biomass, genotype, shapiro.test))
 with(all_but_photosynthesis, tapply(X2014_biomass, genotype, shapiro.test))
 
 # rearrange df for ANOVA
+# for one-factor repeated measures ANOVA
 
-biomass_for_anova <- all_but_photosynthesis[ ,c(2,5,17,18)]
-biomass_for_anova$yr <- c("yr1")
-biomass_for_anova$yr2 <- c("yr2")
+# biomass_for_anova <- all_but_photosynthesis[ ,c(2,5,17,18)]
+# biomass_for_anova$yr <- c("yr1")
+# biomass_for_anova$yr2 <- c("yr2")
+# 
+# 
+# biomass_for_anova2 <- data.frame(c(biomass_for_anova$genotype, biomass_for_anova$genotype.1))
+# colnames(biomass_for_anova2) <- c("genotype")
+# biomass_for_anova2$biomass <- c(biomass_for_anova$X2014_biomass, biomass_for_anova$X2013_biomass)
+# biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
+
+# rearrange for two-factor
+# following guidelines in http://rtutorialseries.blogspot.com/2011/02/r-tutorial-series-two-way-repeated.html
+
+biomass_for_anova <- all_but_photosynthesis[ ,c(1,2,5,17,18)]
+biomass_for_anova2 <- biomass_for_anova[,c(1,2,4,5,3)]
+colnames(biomass_for_anova2) <- c("tree","genotype_yr1","genotype_yr2","biomass_yr1","biomass_yr2")
+
+idata <- data.frame(c("genotype","genotype","biomass","biomass"),c("yr1","yr2","yr1","yr2"))
+colnames(idata) <- c("factor","year")
+
+#use cbind() to bind the columns of the original dataset
+factorBind <- cbind(biomass_for_anova2$genotype_yr1, biomass_for_anova2$genotype_yr2, biomass_for_anova2$biomass_yr1, biomass_for_anova2$biomass_yr2)
+
+#use lm() to generate a linear model using the bound columns from step 1
+factorModel <- lm(factorBind ~ 1)
 
 
-biomass_for_anova2 <- data.frame(c(biomass_for_anova$genotype, biomass_for_anova$genotype.1))
-colnames(biomass_for_anova2) <- c("genotype")
-biomass_for_anova2$biomass <- c(biomass_for_anova$X2014_biomass, biomass_for_anova$X2013_biomass)
-biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
+#compose the Anova(mod, idata, idesign) function
+analysis <- Anova(factorModel, idata = idata, idesign = ~factor * year)
+
+#use summary(object) to visualize the results of the repeated measures ANOVA
+summary(analysis)
 
 
 
@@ -65,12 +89,12 @@ biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
 # code from https://gribblelab.wordpress.com/2009/03/09/repeated-measures-anova-using-r/
 # Note: to adhere to the sum-to-zero convention for effect weights, you should always do this before running anovas in R:
 
-options(contrasts=c("contr.sum","contr.poly"))
-
-
-# ANOVA
-am1 <- aov(biomass ~ yr + Error(genotype/yr), data=biomass_for_anova2)
-
-
-summary(am1)
+# options(contrasts=c("contr.sum","contr.poly"))
+# 
+# 
+# # ANOVA
+# am1 <- aov(biomass ~ yr + Error(genotype/yr), data=biomass_for_anova2)
+# 
+# 
+# summary(am1)
 
