@@ -49,38 +49,46 @@ with(all_but_photosynthesis, tapply(X2014_biomass, genotype, shapiro.test))
 # rearrange df for ANOVA
 # for one-factor repeated measures ANOVA
 
-# biomass_for_anova <- all_but_photosynthesis[ ,c(2,5,17,18)]
-# biomass_for_anova$yr <- c("yr1")
-# biomass_for_anova$yr2 <- c("yr2")
+biomass_for_anova <- all_but_photosynthesis[ ,c(1,2,5,17,18)]
+biomass_for_anova$yr <- c("yr1")
+biomass_for_anova$yr2 <- c("yr2")
 # 
 # 
-# biomass_for_anova2 <- data.frame(c(biomass_for_anova$genotype, biomass_for_anova$genotype.1))
-# colnames(biomass_for_anova2) <- c("genotype")
-# biomass_for_anova2$biomass <- c(biomass_for_anova$X2014_biomass, biomass_for_anova$X2013_biomass)
-# biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
+biomass_for_anova2 <- data.frame(c(biomass_for_anova$genotype, biomass_for_anova$genotype.1))
+colnames(biomass_for_anova2) <- c("genotype")
+biomass_for_anova2$tree <- c(biomass_for_anova$tree,biomass_for_anova$tree)
+biomass_for_anova2$biomass <- c(biomass_for_anova$X2014_biomass, biomass_for_anova$X2013_biomass)
+biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
+
+# split plot
+
+splitPlt <- aov(biomass ~ genotype + Error(tree/genotype) + yr*genotype,data = biomass_for_anova2)
+
+
+
 
 # rearrange for two-factor
 # following guidelines in http://rtutorialseries.blogspot.com/2011/02/r-tutorial-series-two-way-repeated.html
-
-biomass_for_anova <- all_but_photosynthesis[ ,c(1,2,5,17,18)]
-biomass_for_anova2 <- biomass_for_anova[,c(1,2,4,5,3)]
-colnames(biomass_for_anova2) <- c("tree","genotype_yr1","genotype_yr2","biomass_yr1","biomass_yr2")
-
-idata <- data.frame(c("genotype","genotype","biomass","biomass"),c("yr1","yr2","yr1","yr2"))
-colnames(idata) <- c("factor","year")
-
-#use cbind() to bind the columns of the original dataset
-factorBind <- cbind(biomass_for_anova2$genotype_yr1, biomass_for_anova2$genotype_yr2, biomass_for_anova2$biomass_yr1, biomass_for_anova2$biomass_yr2)
-
-#use lm() to generate a linear model using the bound columns from step 1
-factorModel <- lm(factorBind ~ 1)
-
-
-#compose the Anova(mod, idata, idesign) function
-analysis <- Anova(factorModel, idata = idata, idesign = ~factor * year)
-
-#use summary(object) to visualize the results of the repeated measures ANOVA
-summary(analysis)
+# 
+# biomass_for_anova <- all_but_photosynthesis[ ,c(1,2,5,17,18)]
+# biomass_for_anova2 <- biomass_for_anova[,c(1,2,4,5,3)]
+# colnames(biomass_for_anova2) <- c("tree","genotype_yr1","genotype_yr2","biomass_yr1","biomass_yr2")
+# 
+# idata <- data.frame(c("180-372","180-372","199-586","199-586","49-177","49-177","50-194","50-194","57-276","57-276"),c("yr1","yr2","yr1","yr2","yr1","yr2","yr1","yr2","yr1","yr2"))
+# colnames(idata) <- c("genotype","year")
+# 
+# #use cbind() to bind the columns of the original dataset
+# factorBind <- cbind(biomass_for_anova2$genotype_yr1, biomass_for_anova2$genotype_yr2, biomass_for_anova2$biomass_yr1, biomass_for_anova2$biomass_yr2)
+# 
+# #use lm() to generate a linear model using the bound columns from step 1
+# factorModel <- lm(factorBind ~ 1)
+# 
+# 
+# #compose the Anova(mod, idata, idesign) function
+# analysis <- Anova(factorModel, idata = idata, idesign = ~factor * year)
+# 
+# #use summary(object) to visualize the results of the repeated measures ANOVA
+# summary(analysis)
 
 
 
