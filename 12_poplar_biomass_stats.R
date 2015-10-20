@@ -49,21 +49,34 @@ with(all_but_photosynthesis, tapply(X2014_biomass, genotype, shapiro.test))
 # rearrange df for ANOVA
 # for one-factor repeated measures ANOVA
 
-biomass_for_anova <- all_but_photosynthesis[ ,c(1,2,5,17,18)]
+biomass_for_anova <- all_but_photosynthesis[ ,c(1,3,5,18,19)]
 biomass_for_anova$yr <- c("yr1")
 biomass_for_anova$yr2 <- c("yr2")
+biomass_for_anova$state <- as.character(biomass_for_anova$state)
 # 
 # 
-biomass_for_anova2 <- data.frame(c(biomass_for_anova$genotype, biomass_for_anova$genotype.1))
-colnames(biomass_for_anova2) <- c("genotype")
+biomass_for_anova2 <- data.frame(c(biomass_for_anova$state, biomass_for_anova$state))
+colnames(biomass_for_anova2) <- c("state")
 biomass_for_anova2$tree <- c(biomass_for_anova$tree,biomass_for_anova$tree)
-biomass_for_anova2$biomass <- c(biomass_for_anova$X2014_biomass, biomass_for_anova$X2013_biomass)
+biomass_for_anova2$biomass <- c(biomass_for_anova$X2013_biomass, biomass_for_anova$X2014_biomass)
 biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
 
-# split plot
+# split plot (from http://www.cookbook-r.com/Statistical_analysis/ANOVA/)
 
-splitPlt <- aov(biomass ~ genotype + Error(tree/genotype) + yr*genotype,data = biomass_for_anova2)
+aov <- aov(biomass ~ state*yr + Error(tree/yr), data=biomass_for_anova2)
+summary(aov)
+model.tables(aov, "means")
 
+
+
+# splitPlt <- aov(biomass ~ genotype + Error(tree/genotype) + yr*genotype,data = biomass_for_anova2)
+# 
+# spltplt2 <- aov(biomass ~ genotype * tree + Error(yr:genotype), data = biomass_for_anova2)
+# summary(spltplt2)
+# 
+# 
+# with(biomass_for_anova2, xyplot(biomass ~ tree | genotype, groups = yr))
+# 
 
 
 
