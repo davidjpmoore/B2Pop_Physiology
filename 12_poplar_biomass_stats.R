@@ -47,7 +47,7 @@ with(all_but_photosynthesis, tapply(X2013_biomass, genotype, shapiro.test))
 with(all_but_photosynthesis, tapply(X2014_biomass, genotype, shapiro.test))
 
 # rearrange df for ANOVA
-# for one-factor repeated measures ANOVA
+# for split-plot/mixed design ANOVA
 
 biomass_for_anova <- all_but_photosynthesis[ ,c(1,3,5,18,19)]
 biomass_for_anova$yr <- c("yr1")
@@ -61,7 +61,7 @@ biomass_for_anova2$tree <- c(biomass_for_anova$tree,biomass_for_anova$tree)
 biomass_for_anova2$biomass <- c(biomass_for_anova$X2013_biomass, biomass_for_anova$X2014_biomass)
 biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
 
-# split plot (from http://www.cookbook-r.com/Statistical_analysis/ANOVA/)
+# split-plot/mixed design ANOVA (from http://www.cookbook-r.com/Statistical_analysis/ANOVA/)
 
 aov <- aov(biomass ~ state*yr + Error(tree/yr), data=biomass_for_anova2)
 summary(aov)
