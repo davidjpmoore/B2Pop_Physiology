@@ -7,6 +7,7 @@
 
 library(plyr)
 library(car)
+library(ggplot2)
 
 
 setwd("./data/")
@@ -66,6 +67,37 @@ biomass_for_anova2$yr <- c(biomass_for_anova$yr, biomass_for_anova$yr2)
 aov <- aov(biomass ~ state*yr + Error(tree/yr), data=biomass_for_anova2)
 summary(aov)
 model.tables(aov, "means")
+
+
+
+# plot
+
+biomass_vs_yr <- ggplot(biomass_for_anova2, aes(x=yr, y=biomass))
+# 
+biomass_vs_yr + aes(shape = factor(state)) + scale_shape(solid = FALSE, name ="genotype") +
+  geom_boxplot(lwd=1) +
+  geom_point(aes( shape = factor(state)), size = 5, position = "jitter") +
+  theme_classic() +
+  theme(axis.text=element_text(size=20),
+        axis.title=element_text(size=22,face="bold")) + 
+  theme(panel.border = element_blank(), axis.line = element_line(colour="black", size=2, lineend="square"))+
+  theme(axis.ticks = element_line(colour="black", size=2, lineend="square"))+
+  ylab("biomass")+
+  xlab("yr") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
