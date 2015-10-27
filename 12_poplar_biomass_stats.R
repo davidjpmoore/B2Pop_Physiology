@@ -8,6 +8,9 @@
 library(plyr)
 library(car)
 library(ggplot2)
+library(agricolae)
+library(multcomp)
+library(nlme)
 
 
 setwd("./data/")
@@ -68,29 +71,70 @@ aov <- aov(biomass ~ state*yr + Error(tree/yr), data=biomass_for_anova2)
 summary(aov)
 model.tables(aov, "means")
 
+a <- aov$`(Intercept)`
+b <- aov$ tree
+c <- aov$`tree:yr`
+a$residuals
+
+# separate anovas for the two years to test if split plot is giving same results
+# two ways to do this
+
+oneway.test(X2013_biomass ~ state, data = biomass_for_anova, var.equal=TRUE)
+
+anova_2013 <- lm(X2013_biomass ~ state, data = biomass_for_anova)
+summary(anova_2013)
+anova(anova_2013)
+
+oneway.test(X2014_biomass ~ state, data = biomass_for_anova, var.equal=TRUE)
+
+anova_2014 <- lm(X2014_biomass ~ state, data = biomass_for_anova)
+summary(anova_2014)
+anova(anova_2014)
 
 
-# plot
 
-biomass_vs_yr <- ggplot(biomass_for_anova2, aes(x=yr, y=biomass))
-# 
-biomass_vs_yr + aes(shape = factor(state)) + scale_shape(solid = FALSE, name ="genotype") +
-  geom_boxplot(lwd=1) +
-  geom_point(aes( shape = factor(state)), size = 5, position = "jitter") +
-  theme_classic() +
-  theme(axis.text=element_text(size=20),
-        axis.title=element_text(size=22,face="bold")) + 
-  theme(panel.border = element_blank(), axis.line = element_line(colour="black", size=2, lineend="square"))+
-  theme(axis.ticks = element_line(colour="black", size=2, lineend="square"))+
-  ylab("biomass")+
-  xlab("yr") 
+# Tukey HSD test from http://www.r-bloggers.com/anova-and-tukeys-test-on-r/
+
+HSD.test(aov, 'biomass_for_anova2$biomass')
 
 
 
 
+# plot jitter and boxplot from isoprene files
+
+# biomass_vs_yr <- ggplot(biomass_for_anova2, aes(x=yr, y=biomass))
+# # 
+# biomass_vs_yr + aes(shape = factor(state)) + scale_shape(solid = FALSE, name ="genotype") +
+#   geom_boxplot(lwd=1) +
+#   geom_point(aes( shape = factor(state)), size = 5, position = "jitter") +
+#   theme_classic() +
+#   theme(axis.text=element_text(size=20),
+#         axis.title=element_text(size=22,face="bold")) + 
+#   theme(panel.border = element_blank(), axis.line = element_line(colour="black", size=2, lineend="square"))+
+#   theme(axis.ticks = element_line(colour="black", size=2, lineend="square"))+
+#   ylab("biomass")+
+#   xlab("yr") 
 
 
 
+
+# jitter boxplot from http://www.ashander.info/posts/2015/04/barchart-alternatives-in-base-r/
+
+# 5 genotypes, both years together
+
+{
+boxplot( biomass ~ state, biomass_for_anova2, ylab='biomass', xlab='state')
+stripchart(biomass ~ state, biomass_for_anova2, method = 'jitter', add = TRUE, vertical = TRUE,
+           pch = 19)
+  }
+
+# 5 genotypes over 2 years
+
+{
+boxplot( biomass ~ state : yr, biomass_for_anova2, ylab='biomass', xlab='state')
+stripchart(biomass ~ state : yr, biomass_for_anova2, method = 'jitter', add = TRUE, vertical = TRUE,
+           pch = 19)
+  }
 
 
 
