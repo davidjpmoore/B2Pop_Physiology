@@ -14,6 +14,12 @@ library(lsmeans)
 #library(nlme)
 
 
+# there is an issue with ggplot2 not working after exporting figures. This seems to fix it.
+
+dev.off()
+
+
+
 setwd("./data/")
 
 # read in biomass data and join into single dataframe
@@ -136,7 +142,7 @@ summarySE <- function(data=NULL, measurevar, groupvars=NULL, na.rm=FALSE,
 }
 
 
-
+# bar chart biomass both years
 
 summary_biomass <- summarySE(biomass_for_anova2, measurevar="biomass", groupvars=c("state","yr"))
 
@@ -147,9 +153,19 @@ ggplot(summary_biomass, aes(x=yr, y=biomass, fill=state)) +
                 position=position_dodge(.9))
 
 
+# bar chart biomass 2014
+
+summary_biomass_2014 <- summarySE(biomass_for_anova, measurevar="X2014_biomass", groupvars=c("state"))
+
+ggplot(summary_biomass_2014, aes(x=state, y=X2014_biomass, fill=state)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=X2014_biomass-ci, ymax=X2014_biomass+ci),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) + theme(legend.position="none") + ggtitle("Aboveground Woody Biomass") + ylab("Biomass (g)") + xlab("State") 
 
 
-# bar chart phenology
+
+# bar chart growing season
 
 
 summary_phenology <- summarySE(all_but_photosynthesis, measurevar="duration_growth", groupvars=c("state"))
@@ -158,7 +174,22 @@ ggplot(summary_phenology, aes(x=state, y=duration_growth, fill=state)) +
   geom_bar(position=position_dodge(), stat="identity") +
   geom_errorbar(aes(ymin=duration_growth-ci, ymax=duration_growth+ci),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9))
+                position=position_dodge(.9)) + theme(legend.position="none") + ggtitle("Growing Season Length") + ylab("Growing Season (days)") + xlab("State") 
+
+
+
+
+
+# bar chart budbreak
+
+
+summary_budbreak <- summarySE(all_but_photosynthesis, measurevar="start_growth", groupvars=c("state"))
+
+ggplot(summary_budbreak, aes(x=state, y=start_growth, fill=state)) + 
+  geom_bar(position=position_dodge(), stat="identity") +
+  geom_errorbar(aes(ymin=start_growth-ci, ymax=start_growth+ci),
+                width=.2,                    # Width of the error bars
+                position=position_dodge(.9)) + theme(legend.position="none")
 
 
 
@@ -171,7 +202,7 @@ ggplot(summary_branch_num, aes(x=state, y=june_branch_number, fill=state)) +
   geom_bar(position=position_dodge(), stat="identity") +
   geom_errorbar(aes(ymin=june_branch_number-ci, ymax=june_branch_number+ci),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9))
+                position=position_dodge(.9)) + theme(legend.position="none") + ggtitle("branch number") + ylab("branches") + xlab("State") 
 
 
 # bar chart leaf number
@@ -183,7 +214,7 @@ ggplot(summary_leaf_num, aes(x=state, y=leaf_number, fill=state)) +
   geom_bar(position=position_dodge(), stat="identity") +
   geom_errorbar(aes(ymin=leaf_number-ci, ymax=leaf_number+ci),
                 width=.2,                    # Width of the error bars
-                position=position_dodge(.9))
+                position=position_dodge(.9)) + theme(legend.position="none") + ggtitle("Number of Leaves") + ylab("Leaves") + xlab("State") 
 
 
 
@@ -193,17 +224,142 @@ ggplot(summary_leaf_num, aes(x=state, y=leaf_number, fill=state)) +
 # separate anovas for the two years to test if split plot is giving same results
 # two ways to do this
 
+# 2013 biomass
 oneway.test(X2013_biomass ~ state, data = biomass_for_anova, var.equal=TRUE)
 
-anova_2013 <- lm(X2013_biomass ~ state, data = biomass_for_anova)
+#anova_2013 <- lm(X2013_biomass ~ state, data = biomass_for_anova)
+#summary(anova_2013)
+#anova(anova_2013)
+
+anova_2013 <- aov(X2013_biomass ~ state, data = biomass_for_anova)
 summary(anova_2013)
-anova(anova_2013)
+TukeyHSD(anova_2013)
+
+
+# 2014 biomass
 
 oneway.test(X2014_biomass ~ state, data = biomass_for_anova, var.equal=TRUE)
 
-anova_2014 <- lm(X2014_biomass ~ state, data = biomass_for_anova)
-summary(anova_2014)
-anova(anova_2014)
+
+
+# anova_2014 <- lm(X2014_biomass ~ state, data = biomass_for_anova)
+# summary(anova_2014)
+# anova(anova_2014)
+
+
+anova_biomass_2014 <- aov(X2014_biomass ~ state, data = biomass_for_anova)
+summary(anova_biomass_2014)
+TukeyHSD(anova_biomass_2014)
+
+
+# growing season
+
+oneway.test(duration_growth ~ state, data = all_but_photosynthesis, var.equal=TRUE)
+
+anova_grow_season <- aov(duration_growth ~ state, data = all_but_photosynthesis)
+summary(anova_grow_season)
+#TukeyHSD(anova_grow_season)
+
+
+# budbreak
+
+oneway.test(start_growth ~ state, data = all_but_photosynthesis, var.equal=TRUE)
+
+anova_budbreak <- aov(start_growth ~ state, data = all_but_photosynthesis)
+summary(anova_budbreak)
+TukeyHSD(anova_budbreak)
+
+# end new leaves
+
+
+anova_leaf_end <- aov(end_growth ~ state, data = all_but_photosynthesis)
+summary(anova_leaf_end)
+
+
+
+
+
+# leaf number
+
+anova_leaf_number <- aov(leaf_number ~ state, data = all_but_photosynthesis)
+summary(anova_leaf_number)
+TukeyHSD(anova_leaf_number)
+
+
+# branch number
+
+# june aci
+
+#see 11
+
+# september aci
+
+#see 11
+
+
+
+# isoprene
+
+#see 4.2
+
+#Scatter plots
+
+correlations <- read.table (file="correlations.csv", sep=",", header=TRUE)
+mean_correlations <- aggregate(correlations[, 3:21], list(correlations$genotype), mean)
+
+# biomass and growing season
+
+lm.2014_biomass_duration_growth = lm(mean_correlations$duration_growth ~ mean_correlations$biomass_2014)
+summary(lm.2014_biomass_duration_growth)
+
+plot(mean_correlations$duration_growth, mean_correlations$biomass_2014, main="growing season biomass", xlab="growing season (d)", ylab="2014 biomass ", pch=19)
+
+
+# biomass and budbreak
+
+lm.2014_biomass_start_growth = lm(mean_correlations$start_growth ~ mean_correlations$biomass_2014)
+summary(lm.2014_biomass_start_growth)
+
+plot(mean_correlations$start_growth, mean_correlations$biomass_2014, main="budbreak biomass", xlab="budbreak (doy)", ylab="2014 biomass ", pch=19)
+
+
+# biomass and end season
+
+lm.2014_biomass_end_growth = lm(mean_correlations$end_growth ~ mean_correlations$biomass_2014)
+summary(lm.2014_biomass_end_growth)
+
+plot(mean_correlations$end_growth, mean_correlations$biomass_2014, main="leaf stop biomass", xlab="leaf stop (doy)", ylab="2014 biomass ", pch=19)
+
+# biomass and june 2014 vcmax
+
+lm.2014_biomass_june_2014_vcmax = lm(correlations$june_2014_vcmax ~ correlations$biomass_2014)
+summary(lm.2014_biomass_june_2014_vcmax)
+
+plot(correlations$june_2014_vcmax, correlations$biomass_2014, main="june 2014 vcmax biomass", xlab="vcmax", ylab="2014 biomass ", pch=19)
+
+# biomass and july 2014 vcmax
+
+lm.2014_biomass_july_2014_vcmax = lm(correlations$july_2014_vcmax ~ correlations$biomass_2014)
+summary(lm.2014_biomass_july_2014_vcmax)
+
+plot(correlations$july_2014_vcmax, correlations$biomass_2014, main="july 2014 vcmax biomass", xlab="vcmax", ylab="2014 biomass ", pch=19)
+
+# biomass and september 2014 vcmax
+
+lm.2014_biomass_september_2014_vcmax = lm(mean_correlations$september_2014_vcmax ~ mean_correlations$biomass_2014)
+summary(lm.2014_biomass_september_2014_vcmax)
+
+plot(mean_correlations$september_2014_jmax, mean_correlations$biomass_2014, main="september 2014 vcmax biomass", xlab="vcmax", ylab="2014 biomass ", pch=19)
+
+
+
+
+
+
+
+
+
+
 
 
 
